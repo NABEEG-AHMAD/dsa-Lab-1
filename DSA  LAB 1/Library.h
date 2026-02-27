@@ -2,14 +2,11 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-//abstract
 
 class Publication {
 public:
     virtual void display() = 0;
 };
-
-// book
 
 class Book : public Publication {
 private:
@@ -18,7 +15,7 @@ private:
     int pages;
 
 public:
-    Book() {}   // Required for array
+    Book() {}
 
     Book(string t, string a, int p) {
         title = t;
@@ -35,7 +32,6 @@ public:
             << ", Pages: " << pages << endl;
     }
 };
-
 
 class Newspaper : public Publication {
 private:
@@ -62,7 +58,7 @@ public:
     }
 };
 
-
+// Library class
 class Library {
 private:
     Book books[10];
@@ -89,6 +85,34 @@ public:
             newspapers[i].display();
     }
 
+    
+    void sortBooksByTitle() {
+        for (int i = 0; i < bookCount - 1; i++) {
+            int smallIndex = i;
+            for (int j = i + 1; j < bookCount; j++) {
+                if (books[j].getTitle() < books[smallIndex].getTitle()) {
+                    smallIndex = j;
+                }
+            }
+            if (smallIndex != i)
+                swap(books[i], books[smallIndex]);
+        }
+    }
+
+    void sortNewspapersByName() {
+        for (int i = 0; i < newspaperCount - 1; i++) {
+            int smallIndex = i;
+            for (int j = i + 1; j < newspaperCount; j++) {
+                if (newspapers[j].getName() < newspapers[smallIndex].getName()) {
+                    smallIndex = j;
+                }
+            }
+            if (smallIndex != i)
+                swap(newspapers[i], newspapers[smallIndex]);
+        }
+    }
+
+   
     Book* searchBookByTitle(string title) {
         for (int i = 0; i < bookCount; i++) {
             if (books[i].getTitle() == title)
